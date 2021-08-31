@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+//import {MovieData} from "./data";
 
-function App() {
+import React, {useState} from "react";
+
+
+
+function App () {
+  const [title, setTitle] = useState()
+console.log(title);
+
+const [movie, setMovie] = useState()
+console.log(movie)
+ 
+
+  function searchTitle () {
+    fetch(`http://www.omdbapi.com/?t=${title}&apikey=94fce328`)
+    .then(res=>res.json())
+    .then(data=>setMovie(data));
+
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <input type="text" onChange={event=>setTitle(event.target.value)}/>
+        <button onClick={()=>searchTitle()}>search</button> 
+        
+      <div>{movie && movie.Title}</div>
+      <div>{movie && movie.Plot}</div>
+      <div>{movie && movie.Released}</div>
+    
+
+      
     </div>
+        
   );
 }
 
